@@ -6,7 +6,6 @@ on:
 
 env:
   REGISTRY: ${{ secrets.DOCKER_HUB_USERNAME }}
-  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
   build-and-push-image:
@@ -16,6 +15,8 @@ jobs:
       packages: write
 
     steps:
+      - run: echo "REPOSITORY_NAME=${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}"
+
       - name: Checkout repository
         uses: actions/checkout@v3
 
@@ -29,7 +30,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: ${{ env.REGISTRY }}/${{ env.REPOSITORY_NAME }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
