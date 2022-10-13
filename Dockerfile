@@ -2,6 +2,7 @@ ARG GH_BIN="/usr/bin/gh"
 
 
 FROM alpine AS builder
+ARG GH_BIN
 
 RUN apk add -U --no-cache \
             github-cli \
@@ -11,6 +12,7 @@ RUN apk add -U --no-cache \
 
 
 FROM alpine
+ARG GH_BIN
 
 RUN apk add -U --no-cache \
             github-cli \
